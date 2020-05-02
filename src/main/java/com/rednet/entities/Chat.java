@@ -1,13 +1,12 @@
 package com.rednet.entities;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 public class Chat {
     private int id;
     private String message;
-    private int sender;
-    private int receiver;
     private Person personBySender;
     private Person personByReceiver;
 
@@ -39,9 +38,7 @@ public class Chat {
         Chat chat = (Chat) o;
 
         if (id != chat.id) return false;
-        if (message != null ? !message.equals(chat.message) : chat.message != null) return false;
-
-        return true;
+        return Objects.equals(message, chat.message);
     }
 
     @Override
@@ -49,26 +46,6 @@ public class Chat {
         int result = id;
         result = 31 * result + (message != null ? message.hashCode() : 0);
         return result;
-    }
-
-    @Basic
-    @Column(name = "sender", nullable = false)
-    public int getSender() {
-        return sender;
-    }
-
-    public void setSender(int sender) {
-        this.sender = sender;
-    }
-
-    @Basic
-    @Column(name = "receiver", nullable = false)
-    public int getReceiver() {
-        return receiver;
-    }
-
-    public void setReceiver(int receiver) {
-        this.receiver = receiver;
     }
 
     @ManyToOne

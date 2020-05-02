@@ -1,13 +1,13 @@
 package com.rednet.entities;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
-@Table(name = "report_problem", schema = "rednet", catalog = "")
+@Table(name = "report_problem", schema = "rednet")
 public class ReportProblem {
     private int id;
     private String problem;
-    private int personId;
     private Person personByPersonId;
 
     @Id
@@ -38,9 +38,7 @@ public class ReportProblem {
         ReportProblem that = (ReportProblem) o;
 
         if (id != that.id) return false;
-        if (problem != null ? !problem.equals(that.problem) : that.problem != null) return false;
-
-        return true;
+        return Objects.equals(problem, that.problem);
     }
 
     @Override
@@ -48,16 +46,6 @@ public class ReportProblem {
         int result = id;
         result = 31 * result + (problem != null ? problem.hashCode() : 0);
         return result;
-    }
-
-    @Basic
-    @Column(name = "person_id", nullable = false)
-    public int getPersonId() {
-        return personId;
-    }
-
-    public void setPersonId(int personId) {
-        this.personId = personId;
     }
 
     @ManyToOne

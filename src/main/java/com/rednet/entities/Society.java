@@ -8,7 +8,6 @@ import java.util.Objects;
 public class Society {
     private int id;
     private String name;
-    private int headId;
     private Collection<Donor> donorsById;
     private Person personByHeadId;
     private Collection<SocietyAdmin> societyAdminsById;
@@ -49,16 +48,6 @@ public class Society {
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
-    }
-
-    @Basic
-    @Column(name = "head_id", nullable = false)
-    public int getHeadId() {
-        return headId;
-    }
-
-    public void setHeadId(int headId) {
-        this.headId = headId;
     }
 
     @OneToMany(mappedBy = "societyBySocietyId")

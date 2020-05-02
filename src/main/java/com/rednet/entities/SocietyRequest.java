@@ -1,14 +1,14 @@
 package com.rednet.entities;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
-@Table(name = "society_request", schema = "rednet", catalog = "")
+@Table(name = "society_request", schema = "rednet")
 public class SocietyRequest {
     private int id;
     private String name;
     private String description;
-    private int headId;
     private Person personByHeadId;
 
     @Id
@@ -49,10 +49,8 @@ public class SocietyRequest {
         SocietyRequest that = (SocietyRequest) o;
 
         if (id != that.id) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (description != null ? !description.equals(that.description) : that.description != null) return false;
-
-        return true;
+        if (!Objects.equals(name, that.name)) return false;
+        return Objects.equals(description, that.description);
     }
 
     @Override
@@ -61,16 +59,6 @@ public class SocietyRequest {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
-    }
-
-    @Basic
-    @Column(name = "head_id", nullable = false)
-    public int getHeadId() {
-        return headId;
-    }
-
-    public void setHeadId(int headId) {
-        this.headId = headId;
     }
 
     @ManyToOne

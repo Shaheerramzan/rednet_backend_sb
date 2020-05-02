@@ -2,6 +2,7 @@ package com.rednet.entities;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Objects;
 
 @Entity
 public class Donor {
@@ -9,8 +10,6 @@ public class Donor {
     private Date lastDonatedDate;
     private Byte isBusy;
     private Byte systemMute;
-    private int societyId;
-    private int personId;
     private Society societyBySocietyId;
     private Person personByPersonId;
 
@@ -62,12 +61,10 @@ public class Donor {
         Donor donor = (Donor) o;
 
         if (id != donor.id) return false;
-        if (lastDonatedDate != null ? !lastDonatedDate.equals(donor.lastDonatedDate) : donor.lastDonatedDate != null)
+        if (!Objects.equals(lastDonatedDate, donor.lastDonatedDate))
             return false;
-        if (isBusy != null ? !isBusy.equals(donor.isBusy) : donor.isBusy != null) return false;
-        if (systemMute != null ? !systemMute.equals(donor.systemMute) : donor.systemMute != null) return false;
-
-        return true;
+        if (!Objects.equals(isBusy, donor.isBusy)) return false;
+        return Objects.equals(systemMute, donor.systemMute);
     }
 
     @Override
@@ -77,26 +74,6 @@ public class Donor {
         result = 31 * result + (isBusy != null ? isBusy.hashCode() : 0);
         result = 31 * result + (systemMute != null ? systemMute.hashCode() : 0);
         return result;
-    }
-
-    @Basic
-    @Column(name = "society_id", nullable = false)
-    public int getSocietyId() {
-        return societyId;
-    }
-
-    public void setSocietyId(int societyId) {
-        this.societyId = societyId;
-    }
-
-    @Basic
-    @Column(name = "person_id", nullable = false)
-    public int getPersonId() {
-        return personId;
-    }
-
-    public void setPersonId(int personId) {
-        this.personId = personId;
     }
 
     @ManyToOne

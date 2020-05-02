@@ -210,19 +210,17 @@ public class Person {
         if (!Objects.equals(password, person.password)) return false;
         if (!Objects.equals(email, person.email)) return false;
         if (!Objects.equals(firstName, person.firstName)) return false;
-        if (lastName != null ? !lastName.equals(person.lastName) : person.lastName != null) return false;
-        if (gender != null ? !gender.equals(person.gender) : person.gender != null) return false;
-        if (bloodGroup != null ? !bloodGroup.equals(person.bloodGroup) : person.bloodGroup != null) return false;
-        if (longitude != null ? !longitude.equals(person.longitude) : person.longitude != null) return false;
+        if (!Objects.equals(lastName, person.lastName)) return false;
+        if (!Objects.equals(gender, person.gender)) return false;
+        if (!Objects.equals(bloodGroup, person.bloodGroup)) return false;
+        if (!Objects.equals(longitude, person.longitude)) return false;
         if (!Objects.equals(latitude, person.latitude)) return false;
-        if (phone1 != null ? !phone1.equals(person.phone1) : person.phone1 != null) return false;
-        if (phone2 != null ? !phone2.equals(person.phone2) : person.phone2 != null) return false;
-        if (phone3 != null ? !phone3.equals(person.phone3) : person.phone3 != null) return false;
-        if (timastamp != null ? !timastamp.equals(person.timastamp) : person.timastamp != null) return false;
-        if (city != null ? !city.equals(person.city) : person.city != null) return false;
-        if (area != null ? !area.equals(person.area) : person.area != null) return false;
-
-        return true;
+        if (!Objects.equals(phone1, person.phone1)) return false;
+        if (!Objects.equals(phone2, person.phone2)) return false;
+        if (!Objects.equals(phone3, person.phone3)) return false;
+        if (!Objects.equals(timastamp, person.timastamp)) return false;
+        if (!Objects.equals(city, person.city)) return false;
+        return Objects.equals(area, person.area);
     }
 
     @Override

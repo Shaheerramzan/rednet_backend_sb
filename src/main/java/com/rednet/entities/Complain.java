@@ -1,6 +1,7 @@
 package com.rednet.entities;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 public class Complain {
@@ -8,8 +9,6 @@ public class Complain {
     private String message;
     private Byte isResolved;
     private String reply;
-    private int complainant;
-    private int complanie;
     private Person personByComplainant;
     private Person personByComplanie;
 
@@ -61,11 +60,9 @@ public class Complain {
         Complain complain = (Complain) o;
 
         if (id != complain.id) return false;
-        if (message != null ? !message.equals(complain.message) : complain.message != null) return false;
-        if (isResolved != null ? !isResolved.equals(complain.isResolved) : complain.isResolved != null) return false;
-        if (reply != null ? !reply.equals(complain.reply) : complain.reply != null) return false;
-
-        return true;
+        if (!Objects.equals(message, complain.message)) return false;
+        if (!Objects.equals(isResolved, complain.isResolved)) return false;
+        return Objects.equals(reply, complain.reply);
     }
 
     @Override
@@ -75,26 +72,6 @@ public class Complain {
         result = 31 * result + (isResolved != null ? isResolved.hashCode() : 0);
         result = 31 * result + (reply != null ? reply.hashCode() : 0);
         return result;
-    }
-
-    @Basic
-    @Column(name = "complainant", nullable = false)
-    public int getComplainant() {
-        return complainant;
-    }
-
-    public void setComplainant(int complainant) {
-        this.complainant = complainant;
-    }
-
-    @Basic
-    @Column(name = "complanie", nullable = false)
-    public int getComplanie() {
-        return complanie;
-    }
-
-    public void setComplanie(int complanie) {
-        this.complanie = complanie;
     }
 
     @ManyToOne

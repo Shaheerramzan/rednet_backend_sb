@@ -2,6 +2,7 @@ package com.rednet.entities;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 @Entity
 public class History {
@@ -9,7 +10,6 @@ public class History {
     private Timestamp time;
     private Byte complitionStatus;
     private Byte historyType;
-    private int personId;
     private Person personByPersonId;
 
     @Id
@@ -60,12 +60,10 @@ public class History {
         History history = (History) o;
 
         if (id != history.id) return false;
-        if (time != null ? !time.equals(history.time) : history.time != null) return false;
-        if (complitionStatus != null ? !complitionStatus.equals(history.complitionStatus) : history.complitionStatus != null)
+        if (!Objects.equals(time, history.time)) return false;
+        if (!Objects.equals(complitionStatus, history.complitionStatus))
             return false;
-        if (historyType != null ? !historyType.equals(history.historyType) : history.historyType != null) return false;
-
-        return true;
+        return Objects.equals(historyType, history.historyType);
     }
 
     @Override
@@ -75,16 +73,6 @@ public class History {
         result = 31 * result + (complitionStatus != null ? complitionStatus.hashCode() : 0);
         result = 31 * result + (historyType != null ? historyType.hashCode() : 0);
         return result;
-    }
-
-    @Basic
-    @Column(name = "person_id", nullable = false)
-    public int getPersonId() {
-        return personId;
-    }
-
-    public void setPersonId(int personId) {
-        this.personId = personId;
     }
 
     @ManyToOne

@@ -3,10 +3,9 @@ package com.rednet.entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "super_admin", schema = "rednet", catalog = "")
+@Table(name = "super_admin", schema = "rednet")
 public class SuperAdmin {
     private int id;
-    private int personId;
     private Person personByPersonId;
 
     @Id
@@ -32,16 +31,6 @@ public class SuperAdmin {
     @Override
     public int hashCode() {
         return id;
-    }
-
-    @Basic
-    @Column(name = "person_id", nullable = false)
-    public int getPersonId() {
-        return personId;
-    }
-
-    public void setPersonId(int personId) {
-        this.personId = personId;
     }
 
     @ManyToOne

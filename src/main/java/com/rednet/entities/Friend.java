@@ -5,8 +5,6 @@ import javax.persistence.*;
 @Entity
 public class Friend {
     private int id;
-    private int personId;
-    private int friendId;
     private Person personByPersonId;
     private Person personByFriendId;
 
@@ -35,26 +33,6 @@ public class Friend {
     @Override
     public int hashCode() {
         return id;
-    }
-
-    @Basic
-    @Column(name = "person_id", nullable = false)
-    public int getPersonId() {
-        return personId;
-    }
-
-    public void setPersonId(int personId) {
-        this.personId = personId;
-    }
-
-    @Basic
-    @Column(name = "friend_id", nullable = false)
-    public int getFriendId() {
-        return friendId;
-    }
-
-    public void setFriendId(int friendId) {
-        this.friendId = friendId;
     }
 
     @ManyToOne
