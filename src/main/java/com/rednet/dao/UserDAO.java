@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class UserDAO {
 
+    @Autowired
     private UserRepository userRepository;
 
     public Person authenticate(String username, String password)
