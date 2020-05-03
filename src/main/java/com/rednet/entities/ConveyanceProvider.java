@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "conveyance_provider", schema = "rednet", catalog = "")
+@Table(name = "conveyance_provider", schema = "rednet")
 public class ConveyanceProvider {
     private int conveyanceProviderId;
     private Byte isMute;

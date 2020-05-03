@@ -1,5 +1,6 @@
 package com.rednet.dao;
 
+import com.rednet.entities.Person;
 import com.rednet.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

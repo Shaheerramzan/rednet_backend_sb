@@ -1,6 +1,8 @@
 package com.rednet.controllers;
 
 import com.rednet.dao.UserDAO;
+import com.rednet.entities.ConveyanceProvider;
+import com.rednet.entities.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
