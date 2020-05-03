@@ -6,20 +6,20 @@ import java.util.Objects;
 
 @Entity
 public class Society {
-    private int id;
+    private int societyId;
     private String name;
-    private Collection<Donor> donorsById;
+    private Collection<Donor> donorsBySocietyId;
     private Person personByHeadId;
-    private Collection<SocietyAdmin> societyAdminsById;
+    private Collection<SocietyAdmin> societyAdminsBySocietyId;
 
     @Id
-    @Column(name = "id", nullable = false)
-    public int getId() {
-        return id;
+    @Column(name = "society_id", nullable = false)
+    public int getSocietyId() {
+        return societyId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setSocietyId(int societyId) {
+        this.societyId = societyId;
     }
 
     @Basic
@@ -36,31 +36,27 @@ public class Society {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Society society = (Society) o;
-
-        if (id != society.id) return false;
-        return Objects.equals(name, society.name);
+        return societyId == society.societyId &&
+                Objects.equals(name, society.name);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        return result;
+        return Objects.hash(societyId, name);
     }
 
     @OneToMany(mappedBy = "societyBySocietyId")
-    public Collection<Donor> getDonorsById() {
-        return donorsById;
+    public Collection<Donor> getDonorsBySocietyId() {
+        return donorsBySocietyId;
     }
 
-    public void setDonorsById(Collection<Donor> donorsById) {
-        this.donorsById = donorsById;
+    public void setDonorsBySocietyId(Collection<Donor> donorsBySocietyId) {
+        this.donorsBySocietyId = donorsBySocietyId;
     }
 
     @ManyToOne
-    @JoinColumn(name = "head_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "head_id", referencedColumnName = "person_id", nullable = false)
     public Person getPersonByHeadId() {
         return personByHeadId;
     }
@@ -70,11 +66,11 @@ public class Society {
     }
 
     @OneToMany(mappedBy = "societyBySocietyId")
-    public Collection<SocietyAdmin> getSocietyAdminsById() {
-        return societyAdminsById;
+    public Collection<SocietyAdmin> getSocietyAdminsBySocietyId() {
+        return societyAdminsBySocietyId;
     }
 
-    public void setSocietyAdminsById(Collection<SocietyAdmin> societyAdminsById) {
-        this.societyAdminsById = societyAdminsById;
+    public void setSocietyAdminsBySocietyId(Collection<SocietyAdmin> societyAdminsBySocietyId) {
+        this.societyAdminsBySocietyId = societyAdminsBySocietyId;
     }
 }

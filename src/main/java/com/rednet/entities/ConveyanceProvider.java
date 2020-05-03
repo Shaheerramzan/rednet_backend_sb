@@ -4,20 +4,20 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "conveyance_provider", schema = "rednet")
+@Table(name = "conveyance_provider", schema = "rednet", catalog = "")
 public class ConveyanceProvider {
-    private int id;
+    private int conveyanceProviderId;
     private Byte isMute;
     private Person personByPersonId;
 
     @Id
-    @Column(name = "id", nullable = false)
-    public int getId() {
-        return id;
+    @Column(name = "conveyance_provider_id", nullable = false)
+    public int getConveyanceProviderId() {
+        return conveyanceProviderId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setConveyanceProviderId(int conveyanceProviderId) {
+        this.conveyanceProviderId = conveyanceProviderId;
     }
 
     @Basic
@@ -34,22 +34,18 @@ public class ConveyanceProvider {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         ConveyanceProvider that = (ConveyanceProvider) o;
-
-        if (id != that.id) return false;
-        return Objects.equals(isMute, that.isMute);
+        return conveyanceProviderId == that.conveyanceProviderId &&
+                Objects.equals(isMute, that.isMute);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (isMute != null ? isMute.hashCode() : 0);
-        return result;
+        return Objects.hash(conveyanceProviderId, isMute);
     }
 
     @ManyToOne
-    @JoinColumn(name = "person_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "person_id", referencedColumnName = "person_id", nullable = false)
     public Person getPersonByPersonId() {
         return personByPersonId;
     }

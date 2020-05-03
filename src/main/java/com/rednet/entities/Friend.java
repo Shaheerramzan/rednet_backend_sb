@@ -1,57 +1,54 @@
 package com.rednet.entities;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 public class Friend {
-    private int id;
-    private Person personByPersonId;
-    private Person personByFriendId;
+    private int friendId;
+    private Person personByPersonOne;
+    private Person personByPersonTwo;
 
     @Id
-    @Column(name = "id", nullable = false)
-    public int getId() {
-        return id;
+    @Column(name = "friend_id", nullable = false)
+    public int getFriendId() {
+        return friendId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setFriendId(int friendId) {
+        this.friendId = friendId;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Friend friend = (Friend) o;
-
-        if (id != friend.id) return false;
-
-        return true;
+        return friendId == friend.friendId;
     }
 
     @Override
     public int hashCode() {
-        return id;
+        return Objects.hash(friendId);
     }
 
     @ManyToOne
-    @JoinColumn(name = "person_id", referencedColumnName = "id", nullable = false)
-    public Person getPersonByPersonId() {
-        return personByPersonId;
+    @JoinColumn(name = "person_one", referencedColumnName = "person_id", nullable = false)
+    public Person getPersonByPersonOne() {
+        return personByPersonOne;
     }
 
-    public void setPersonByPersonId(Person personByPersonId) {
-        this.personByPersonId = personByPersonId;
+    public void setPersonByPersonOne(Person personByPersonOne) {
+        this.personByPersonOne = personByPersonOne;
     }
 
     @ManyToOne
-    @JoinColumn(name = "friend_id", referencedColumnName = "id", nullable = false)
-    public Person getPersonByFriendId() {
-        return personByFriendId;
+    @JoinColumn(name = "person_two", referencedColumnName = "person_id", nullable = false)
+    public Person getPersonByPersonTwo() {
+        return personByPersonTwo;
     }
 
-    public void setPersonByFriendId(Person personByFriendId) {
-        this.personByFriendId = personByFriendId;
+    public void setPersonByPersonTwo(Person personByPersonTwo) {
+        this.personByPersonTwo = personByPersonTwo;
     }
 }

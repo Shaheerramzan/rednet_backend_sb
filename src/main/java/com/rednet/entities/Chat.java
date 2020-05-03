@@ -5,19 +5,19 @@ import java.util.Objects;
 
 @Entity
 public class Chat {
-    private int id;
+    private int chatId;
     private String message;
     private Person personBySender;
     private Person personByReceiver;
 
     @Id
-    @Column(name = "id", nullable = false)
-    public int getId() {
-        return id;
+    @Column(name = "chat_id", nullable = false)
+    public int getChatId() {
+        return chatId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setChatId(int chatId) {
+        this.chatId = chatId;
     }
 
     @Basic
@@ -34,22 +34,18 @@ public class Chat {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Chat chat = (Chat) o;
-
-        if (id != chat.id) return false;
-        return Objects.equals(message, chat.message);
+        return chatId == chat.chatId &&
+                Objects.equals(message, chat.message);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (message != null ? message.hashCode() : 0);
-        return result;
+        return Objects.hash(chatId, message);
     }
 
     @ManyToOne
-    @JoinColumn(name = "sender", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "sender", referencedColumnName = "person_id", nullable = false)
     public Person getPersonBySender() {
         return personBySender;
     }
@@ -59,7 +55,7 @@ public class Chat {
     }
 
     @ManyToOne
-    @JoinColumn(name = "receiver", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "receiver", referencedColumnName = "person_id", nullable = false)
     public Person getPersonByReceiver() {
         return personByReceiver;
     }

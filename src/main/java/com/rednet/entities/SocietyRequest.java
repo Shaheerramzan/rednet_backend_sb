@@ -4,21 +4,21 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "society_request", schema = "rednet")
+@Table(name = "society_request", schema = "rednet", catalog = "")
 public class SocietyRequest {
-    private int id;
+    private int societyRequestId;
     private String name;
     private String description;
     private Person personByHeadId;
 
     @Id
-    @Column(name = "id", nullable = false)
-    public int getId() {
-        return id;
+    @Column(name = "society_request_id", nullable = false)
+    public int getSocietyRequestId() {
+        return societyRequestId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setSocietyRequestId(int societyRequestId) {
+        this.societyRequestId = societyRequestId;
     }
 
     @Basic
@@ -45,24 +45,19 @@ public class SocietyRequest {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         SocietyRequest that = (SocietyRequest) o;
-
-        if (id != that.id) return false;
-        if (!Objects.equals(name, that.name)) return false;
-        return Objects.equals(description, that.description);
+        return societyRequestId == that.societyRequestId &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(description, that.description);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        return result;
+        return Objects.hash(societyRequestId, name, description);
     }
 
     @ManyToOne
-    @JoinColumn(name = "head_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "head_id", referencedColumnName = "person_id", nullable = false)
     public Person getPersonByHeadId() {
         return personByHeadId;
     }

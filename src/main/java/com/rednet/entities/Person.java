@@ -7,7 +7,7 @@ import java.util.Objects;
 
 @Entity
 public class Person {
-    private int id;
+    private int personId;
     private String username;
     private String password;
     private String email;
@@ -20,32 +20,32 @@ public class Person {
     private String phone1;
     private String phone2;
     private String phone3;
-    private Date timastamp;
+    private Date createdOn;
     private String city;
     private String area;
-    private Collection<Chat> chatsById;
-    private Collection<Chat> chatsById_0;
-    private Collection<Complain> complainsById;
-    private Collection<Complain> complainsById_0;
-    private Collection<ConveyanceProvider> conveyanceProvidersById;
-    private Collection<Donor> donorsById;
-    private Collection<Friend> friendsById;
-    private Collection<Friend> friendsById_0;
-    private Collection<History> historiesById;
-    private Collection<ReportProblem> reportProblemsById;
-    private Collection<Society> societiesById;
-    private Collection<SocietyAdmin> societyAdminsById;
-    private Collection<SocietyRequest> societyRequestsById;
-    private Collection<SuperAdmin> superAdminsById;
+    private Collection<Chat> chatsByPersonId;
+    private Collection<Chat> chatsByPersonId_0;
+    private Collection<Complain> complainsByPersonId;
+    private Collection<Complain> complainsByPersonId_0;
+    private Collection<ConveyanceProvider> conveyanceProvidersByPersonId;
+    private Collection<Donor> donorsByPersonId;
+    private Collection<Friend> friendsByPersonId;
+    private Collection<Friend> friendsByPersonId_0;
+    private Collection<History> historiesByPersonId;
+    private Collection<ReportProblem> reportProblemsByPersonId;
+    private Collection<Society> societiesByPersonId;
+    private Collection<SocietyAdmin> societyAdminsByPersonId;
+    private Collection<SocietyRequest> societyRequestsByPersonId;
+    private Collection<SuperAdmin> superAdminsByPersonId;
 
     @Id
-    @Column(name = "id", nullable = false)
-    public int getId() {
-        return id;
+    @Column(name = "person_id", nullable = false)
+    public int getPersonId() {
+        return personId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPersonId(int personId) {
+        this.personId = personId;
     }
 
     @Basic
@@ -169,13 +169,13 @@ public class Person {
     }
 
     @Basic
-    @Column(name = "timastamp", nullable = true)
-    public Date getTimastamp() {
-        return timastamp;
+    @Column(name = "created_on", nullable = true)
+    public Date getCreatedOn() {
+        return createdOn;
     }
 
-    public void setTimastamp(Date timastamp) {
-        this.timastamp = timastamp;
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
     }
 
     @Basic
@@ -202,171 +202,153 @@ public class Person {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Person person = (Person) o;
-
-        if (id != person.id) return false;
-        if (!Objects.equals(username, person.username)) return false;
-        if (!Objects.equals(password, person.password)) return false;
-        if (!Objects.equals(email, person.email)) return false;
-        if (!Objects.equals(firstName, person.firstName)) return false;
-        if (!Objects.equals(lastName, person.lastName)) return false;
-        if (!Objects.equals(gender, person.gender)) return false;
-        if (!Objects.equals(bloodGroup, person.bloodGroup)) return false;
-        if (!Objects.equals(longitude, person.longitude)) return false;
-        if (!Objects.equals(latitude, person.latitude)) return false;
-        if (!Objects.equals(phone1, person.phone1)) return false;
-        if (!Objects.equals(phone2, person.phone2)) return false;
-        if (!Objects.equals(phone3, person.phone3)) return false;
-        if (!Objects.equals(timastamp, person.timastamp)) return false;
-        if (!Objects.equals(city, person.city)) return false;
-        return Objects.equals(area, person.area);
+        return personId == person.personId &&
+                Objects.equals(username, person.username) &&
+                Objects.equals(password, person.password) &&
+                Objects.equals(email, person.email) &&
+                Objects.equals(firstName, person.firstName) &&
+                Objects.equals(lastName, person.lastName) &&
+                Objects.equals(gender, person.gender) &&
+                Objects.equals(bloodGroup, person.bloodGroup) &&
+                Objects.equals(longitude, person.longitude) &&
+                Objects.equals(latitude, person.latitude) &&
+                Objects.equals(phone1, person.phone1) &&
+                Objects.equals(phone2, person.phone2) &&
+                Objects.equals(phone3, person.phone3) &&
+                Objects.equals(createdOn, person.createdOn) &&
+                Objects.equals(city, person.city) &&
+                Objects.equals(area, person.area);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (username != null ? username.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        result = 31 * result + (gender != null ? gender.hashCode() : 0);
-        result = 31 * result + (bloodGroup != null ? bloodGroup.hashCode() : 0);
-        result = 31 * result + (longitude != null ? longitude.hashCode() : 0);
-        result = 31 * result + (latitude != null ? latitude.hashCode() : 0);
-        result = 31 * result + (phone1 != null ? phone1.hashCode() : 0);
-        result = 31 * result + (phone2 != null ? phone2.hashCode() : 0);
-        result = 31 * result + (phone3 != null ? phone3.hashCode() : 0);
-        result = 31 * result + (timastamp != null ? timastamp.hashCode() : 0);
-        result = 31 * result + (city != null ? city.hashCode() : 0);
-        result = 31 * result + (area != null ? area.hashCode() : 0);
-        return result;
+        return Objects.hash(personId, username, password, email, firstName, lastName, gender, bloodGroup, longitude, latitude, phone1, phone2, phone3, createdOn, city, area);
     }
 
     @OneToMany(mappedBy = "personBySender")
-    public Collection<Chat> getChatsById() {
-        return chatsById;
+    public Collection<Chat> getChatsByPersonId() {
+        return chatsByPersonId;
     }
 
-    public void setChatsById(Collection<Chat> chatsById) {
-        this.chatsById = chatsById;
+    public void setChatsByPersonId(Collection<Chat> chatsByPersonId) {
+        this.chatsByPersonId = chatsByPersonId;
     }
 
     @OneToMany(mappedBy = "personByReceiver")
-    public Collection<Chat> getChatsById_0() {
-        return chatsById_0;
+    public Collection<Chat> getChatsByPersonId_0() {
+        return chatsByPersonId_0;
     }
 
-    public void setChatsById_0(Collection<Chat> chatsById_0) {
-        this.chatsById_0 = chatsById_0;
+    public void setChatsByPersonId_0(Collection<Chat> chatsByPersonId_0) {
+        this.chatsByPersonId_0 = chatsByPersonId_0;
     }
 
     @OneToMany(mappedBy = "personByComplainant")
-    public Collection<Complain> getComplainsById() {
-        return complainsById;
+    public Collection<Complain> getComplainsByPersonId() {
+        return complainsByPersonId;
     }
 
-    public void setComplainsById(Collection<Complain> complainsById) {
-        this.complainsById = complainsById;
+    public void setComplainsByPersonId(Collection<Complain> complainsByPersonId) {
+        this.complainsByPersonId = complainsByPersonId;
     }
 
     @OneToMany(mappedBy = "personByComplanie")
-    public Collection<Complain> getComplainsById_0() {
-        return complainsById_0;
+    public Collection<Complain> getComplainsByPersonId_0() {
+        return complainsByPersonId_0;
     }
 
-    public void setComplainsById_0(Collection<Complain> complainsById_0) {
-        this.complainsById_0 = complainsById_0;
-    }
-
-    @OneToMany(mappedBy = "personByPersonId")
-    public Collection<ConveyanceProvider> getConveyanceProvidersById() {
-        return conveyanceProvidersById;
-    }
-
-    public void setConveyanceProvidersById(Collection<ConveyanceProvider> conveyanceProvidersById) {
-        this.conveyanceProvidersById = conveyanceProvidersById;
+    public void setComplainsByPersonId_0(Collection<Complain> complainsByPersonId_0) {
+        this.complainsByPersonId_0 = complainsByPersonId_0;
     }
 
     @OneToMany(mappedBy = "personByPersonId")
-    public Collection<Donor> getDonorsById() {
-        return donorsById;
+    public Collection<ConveyanceProvider> getConveyanceProvidersByPersonId() {
+        return conveyanceProvidersByPersonId;
     }
 
-    public void setDonorsById(Collection<Donor> donorsById) {
-        this.donorsById = donorsById;
-    }
-
-    @OneToMany(mappedBy = "personByPersonId")
-    public Collection<Friend> getFriendsById() {
-        return friendsById;
-    }
-
-    public void setFriendsById(Collection<Friend> friendsById) {
-        this.friendsById = friendsById;
-    }
-
-    @OneToMany(mappedBy = "personByFriendId")
-    public Collection<Friend> getFriendsById_0() {
-        return friendsById_0;
-    }
-
-    public void setFriendsById_0(Collection<Friend> friendsById_0) {
-        this.friendsById_0 = friendsById_0;
+    public void setConveyanceProvidersByPersonId(Collection<ConveyanceProvider> conveyanceProvidersByPersonId) {
+        this.conveyanceProvidersByPersonId = conveyanceProvidersByPersonId;
     }
 
     @OneToMany(mappedBy = "personByPersonId")
-    public Collection<History> getHistoriesById() {
-        return historiesById;
+    public Collection<Donor> getDonorsByPersonId() {
+        return donorsByPersonId;
     }
 
-    public void setHistoriesById(Collection<History> historiesById) {
-        this.historiesById = historiesById;
+    public void setDonorsByPersonId(Collection<Donor> donorsByPersonId) {
+        this.donorsByPersonId = donorsByPersonId;
+    }
+
+    @OneToMany(mappedBy = "personByPersonOne")
+    public Collection<Friend> getFriendsByPersonId() {
+        return friendsByPersonId;
+    }
+
+    public void setFriendsByPersonId(Collection<Friend> friendsByPersonId) {
+        this.friendsByPersonId = friendsByPersonId;
+    }
+
+    @OneToMany(mappedBy = "personByPersonTwo")
+    public Collection<Friend> getFriendsByPersonId_0() {
+        return friendsByPersonId_0;
+    }
+
+    public void setFriendsByPersonId_0(Collection<Friend> friendsByPersonId_0) {
+        this.friendsByPersonId_0 = friendsByPersonId_0;
     }
 
     @OneToMany(mappedBy = "personByPersonId")
-    public Collection<ReportProblem> getReportProblemsById() {
-        return reportProblemsById;
+    public Collection<History> getHistoriesByPersonId() {
+        return historiesByPersonId;
     }
 
-    public void setReportProblemsById(Collection<ReportProblem> reportProblemsById) {
-        this.reportProblemsById = reportProblemsById;
+    public void setHistoriesByPersonId(Collection<History> historiesByPersonId) {
+        this.historiesByPersonId = historiesByPersonId;
+    }
+
+    @OneToMany(mappedBy = "personByPersonId")
+    public Collection<ReportProblem> getReportProblemsByPersonId() {
+        return reportProblemsByPersonId;
+    }
+
+    public void setReportProblemsByPersonId(Collection<ReportProblem> reportProblemsByPersonId) {
+        this.reportProblemsByPersonId = reportProblemsByPersonId;
     }
 
     @OneToMany(mappedBy = "personByHeadId")
-    public Collection<Society> getSocietiesById() {
-        return societiesById;
+    public Collection<Society> getSocietiesByPersonId() {
+        return societiesByPersonId;
     }
 
-    public void setSocietiesById(Collection<Society> societiesById) {
-        this.societiesById = societiesById;
+    public void setSocietiesByPersonId(Collection<Society> societiesByPersonId) {
+        this.societiesByPersonId = societiesByPersonId;
     }
 
     @OneToMany(mappedBy = "personByPersonId")
-    public Collection<SocietyAdmin> getSocietyAdminsById() {
-        return societyAdminsById;
+    public Collection<SocietyAdmin> getSocietyAdminsByPersonId() {
+        return societyAdminsByPersonId;
     }
 
-    public void setSocietyAdminsById(Collection<SocietyAdmin> societyAdminsById) {
-        this.societyAdminsById = societyAdminsById;
+    public void setSocietyAdminsByPersonId(Collection<SocietyAdmin> societyAdminsByPersonId) {
+        this.societyAdminsByPersonId = societyAdminsByPersonId;
     }
 
     @OneToMany(mappedBy = "personByHeadId")
-    public Collection<SocietyRequest> getSocietyRequestsById() {
-        return societyRequestsById;
+    public Collection<SocietyRequest> getSocietyRequestsByPersonId() {
+        return societyRequestsByPersonId;
     }
 
-    public void setSocietyRequestsById(Collection<SocietyRequest> societyRequestsById) {
-        this.societyRequestsById = societyRequestsById;
+    public void setSocietyRequestsByPersonId(Collection<SocietyRequest> societyRequestsByPersonId) {
+        this.societyRequestsByPersonId = societyRequestsByPersonId;
     }
 
     @OneToMany(mappedBy = "personByPersonId")
-    public Collection<SuperAdmin> getSuperAdminsById() {
-        return superAdminsById;
+    public Collection<SuperAdmin> getSuperAdminsByPersonId() {
+        return superAdminsByPersonId;
     }
 
-    public void setSuperAdminsById(Collection<SuperAdmin> superAdminsById) {
-        this.superAdminsById = superAdminsById;
+    public void setSuperAdminsByPersonId(Collection<SuperAdmin> superAdminsByPersonId) {
+        this.superAdminsByPersonId = superAdminsByPersonId;
     }
 }

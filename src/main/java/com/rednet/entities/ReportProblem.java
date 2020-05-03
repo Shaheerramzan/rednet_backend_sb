@@ -4,20 +4,20 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "report_problem", schema = "rednet")
+@Table(name = "report_problem", schema = "rednet", catalog = "")
 public class ReportProblem {
-    private int id;
+    private int reportProblemId;
     private String problem;
     private Person personByPersonId;
 
     @Id
-    @Column(name = "id", nullable = false)
-    public int getId() {
-        return id;
+    @Column(name = "report_problem_id", nullable = false)
+    public int getReportProblemId() {
+        return reportProblemId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setReportProblemId(int reportProblemId) {
+        this.reportProblemId = reportProblemId;
     }
 
     @Basic
@@ -34,22 +34,18 @@ public class ReportProblem {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         ReportProblem that = (ReportProblem) o;
-
-        if (id != that.id) return false;
-        return Objects.equals(problem, that.problem);
+        return reportProblemId == that.reportProblemId &&
+                Objects.equals(problem, that.problem);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (problem != null ? problem.hashCode() : 0);
-        return result;
+        return Objects.hash(reportProblemId, problem);
     }
 
     @ManyToOne
-    @JoinColumn(name = "person_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "person_id", referencedColumnName = "person_id", nullable = false)
     public Person getPersonByPersonId() {
         return personByPersonId;
     }

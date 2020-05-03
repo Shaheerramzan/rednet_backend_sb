@@ -5,7 +5,7 @@ import java.util.Objects;
 
 @Entity
 public class Complain {
-    private int id;
+    private int complainId;
     private String message;
     private Byte isResolved;
     private String reply;
@@ -13,13 +13,13 @@ public class Complain {
     private Person personByComplanie;
 
     @Id
-    @Column(name = "id", nullable = false)
-    public int getId() {
-        return id;
+    @Column(name = "complain_id", nullable = false)
+    public int getComplainId() {
+        return complainId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setComplainId(int complainId) {
+        this.complainId = complainId;
     }
 
     @Basic
@@ -56,26 +56,20 @@ public class Complain {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Complain complain = (Complain) o;
-
-        if (id != complain.id) return false;
-        if (!Objects.equals(message, complain.message)) return false;
-        if (!Objects.equals(isResolved, complain.isResolved)) return false;
-        return Objects.equals(reply, complain.reply);
+        return complainId == complain.complainId &&
+                Objects.equals(message, complain.message) &&
+                Objects.equals(isResolved, complain.isResolved) &&
+                Objects.equals(reply, complain.reply);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (message != null ? message.hashCode() : 0);
-        result = 31 * result + (isResolved != null ? isResolved.hashCode() : 0);
-        result = 31 * result + (reply != null ? reply.hashCode() : 0);
-        return result;
+        return Objects.hash(complainId, message, isResolved, reply);
     }
 
     @ManyToOne
-    @JoinColumn(name = "complainant", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "complainant", referencedColumnName = "person_id", nullable = false)
     public Person getPersonByComplainant() {
         return personByComplainant;
     }
@@ -85,7 +79,7 @@ public class Complain {
     }
 
     @ManyToOne
-    @JoinColumn(name = "complanie", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "complanie", referencedColumnName = "person_id", nullable = false)
     public Person getPersonByComplanie() {
         return personByComplanie;
     }
