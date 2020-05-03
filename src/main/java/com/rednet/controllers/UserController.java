@@ -26,9 +26,10 @@ public class UserController {
             String username = request.getParameter("username");
             String password = request.getParameter("password");
             person = userDAO.authenticate(username,password);
-            Collection <ConveyanceProvider> cp = person.getConveyanceProvidersByPersonId();
+            //Collection<ConveyanceProvider> cp = person.getConveyanceProvidersByPersonId();
+            //person.setConveyanceProvidersByPersonId(person.getConveyanceProvidersByPersonId());
             request.getSession().setAttribute("user", person);
-            return new ResponseEntity<>(person, HttpStatus.OK);
+            return new ResponseEntity<Person>(person, HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
