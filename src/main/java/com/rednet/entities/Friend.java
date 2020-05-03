@@ -1,5 +1,7 @@
 package com.rednet.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -34,6 +36,7 @@ public class Friend {
 
     @ManyToOne
     @JoinColumn(name = "person_one", referencedColumnName = "person_id", nullable = false)
+    @JsonIgnore
     public Person getPersonByPersonOne() {
         return personByPersonOne;
     }
@@ -44,6 +47,7 @@ public class Friend {
 
     @ManyToOne
     @JoinColumn(name = "person_two", referencedColumnName = "person_id", nullable = false)
+    @JsonIgnore
     public Person getPersonByPersonTwo() {
         return personByPersonTwo;
     }

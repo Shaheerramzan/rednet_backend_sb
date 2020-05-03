@@ -1,5 +1,7 @@
 package com.rednet.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -58,6 +60,7 @@ public class SocietyRequest {
 
     @ManyToOne
     @JoinColumn(name = "head_id", referencedColumnName = "person_id", nullable = false)
+    @JsonIgnore
     public Person getPersonByHeadId() {
         return personByHeadId;
     }

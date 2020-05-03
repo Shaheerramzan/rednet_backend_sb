@@ -1,5 +1,7 @@
 package com.rednet.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.Objects;
@@ -71,6 +73,7 @@ public class Donor {
 
     @ManyToOne
     @JoinColumn(name = "society_id", referencedColumnName = "society_id", nullable = false)
+    @JsonIgnore
     public Society getSocietyBySocietyId() {
         return societyBySocietyId;
     }
@@ -81,6 +84,7 @@ public class Donor {
 
     @ManyToOne
     @JoinColumn(name = "person_id", referencedColumnName = "person_id", nullable = false)
+    @JsonIgnore
     public Person getPersonByPersonId() {
         return personByPersonId;
     }

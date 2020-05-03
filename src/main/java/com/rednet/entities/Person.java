@@ -1,5 +1,7 @@
 package com.rednet.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.Collection;
@@ -227,6 +229,7 @@ public class Person {
     }
 
     @OneToMany(mappedBy = "personBySender")
+    @JsonIgnore
     public Collection<Chat> getChatsByPersonId() {
         return chatsByPersonId;
     }
@@ -236,6 +239,7 @@ public class Person {
     }
 
     @OneToMany(mappedBy = "personByReceiver")
+    @JsonIgnore
     public Collection<Chat> getChatsByPersonId_0() {
         return chatsByPersonId_0;
     }
@@ -245,6 +249,7 @@ public class Person {
     }
 
     @OneToMany(mappedBy = "personByComplainant")
+    @JsonIgnore
     public Collection<Complain> getComplainsByPersonId() {
         return complainsByPersonId;
     }
@@ -254,6 +259,7 @@ public class Person {
     }
 
     @OneToMany(mappedBy = "personByComplanie")
+    @JsonIgnore
     public Collection<Complain> getComplainsByPersonId_0() {
         return complainsByPersonId_0;
     }
@@ -263,6 +269,7 @@ public class Person {
     }
 
     @OneToMany(mappedBy = "personByPersonId")
+    @JsonIgnore
     public Collection<ConveyanceProvider> getConveyanceProvidersByPersonId() {
         return conveyanceProvidersByPersonId;
     }
@@ -272,6 +279,7 @@ public class Person {
     }
 
     @OneToMany(mappedBy = "personByPersonId")
+    @JsonIgnore
     public Collection<Donor> getDonorsByPersonId() {
         return donorsByPersonId;
     }
@@ -281,6 +289,7 @@ public class Person {
     }
 
     @OneToMany(mappedBy = "personByPersonOne")
+    @JsonIgnore
     public Collection<Friend> getFriendsByPersonId() {
         return friendsByPersonId;
     }
@@ -290,6 +299,7 @@ public class Person {
     }
 
     @OneToMany(mappedBy = "personByPersonTwo")
+    @JsonIgnore
     public Collection<Friend> getFriendsByPersonId_0() {
         return friendsByPersonId_0;
     }
@@ -299,6 +309,7 @@ public class Person {
     }
 
     @OneToMany(mappedBy = "personByPersonId")
+    @JsonIgnore
     public Collection<History> getHistoriesByPersonId() {
         return historiesByPersonId;
     }
@@ -308,6 +319,7 @@ public class Person {
     }
 
     @OneToMany(mappedBy = "personByPersonId")
+    @JsonIgnore
     public Collection<ReportProblem> getReportProblemsByPersonId() {
         return reportProblemsByPersonId;
     }
@@ -317,6 +329,7 @@ public class Person {
     }
 
     @OneToMany(mappedBy = "personByHeadId")
+    @JsonIgnore
     public Collection<Society> getSocietiesByPersonId() {
         return societiesByPersonId;
     }
@@ -326,6 +339,7 @@ public class Person {
     }
 
     @OneToMany(mappedBy = "personByPersonId")
+    @JsonIgnore
     public Collection<SocietyAdmin> getSocietyAdminsByPersonId() {
         return societyAdminsByPersonId;
     }
@@ -335,6 +349,7 @@ public class Person {
     }
 
     @OneToMany(mappedBy = "personByHeadId")
+    @JsonIgnore
     public Collection<SocietyRequest> getSocietyRequestsByPersonId() {
         return societyRequestsByPersonId;
     }
@@ -344,6 +359,7 @@ public class Person {
     }
 
     @OneToMany(mappedBy = "personByPersonId")
+    @JsonIgnore
     public Collection<SuperAdmin> getSuperAdminsByPersonId() {
         return superAdminsByPersonId;
     }
