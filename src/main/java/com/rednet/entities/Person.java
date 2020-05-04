@@ -1,7 +1,11 @@
 package com.rednet.entities;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.FetchProfile;
+
 import javax.persistence.*;
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -20,23 +24,23 @@ public class Person {
     private String phone1;
     private String phone2;
     private String phone3;
-    private Date timastamp;
+    private Timestamp joinDate;
     private String city;
     private String area;
+    private Chat chatById;
     private Collection<Chat> chatsById;
-    private Collection<Chat> chatsById_0;
+    private Complain complainById;
     private Collection<Complain> complainsById;
-    private Collection<Complain> complainsById_0;
-    private Collection<ConveyanceProvider> conveyanceProvidersById;
-    private Collection<Donor> donorsById;
+    private ConveyanceProvider conveyanceProviderById;
+    private Donor donorById;
+    private Friend friendById;
     private Collection<Friend> friendsById;
-    private Collection<Friend> friendsById_0;
-    private Collection<History> historiesById;
-    private Collection<ReportProblem> reportProblemsById;
-    private Collection<Society> societiesById;
-    private Collection<SocietyAdmin> societyAdminsById;
-    private Collection<SocietyRequest> societyRequestsById;
-    private Collection<SuperAdmin> superAdminsById;
+    private History historyById;
+    private ReportProblem reportProblemById;
+    private Society societyById;
+    private SocietyAdmin societyAdminById;
+    private SocietyRequest societyRequestById;
+    private SuperAdmin superAdminById;
 
     @Id
     @Column(name = "id", nullable = false)
@@ -169,13 +173,13 @@ public class Person {
     }
 
     @Basic
-    @Column(name = "timastamp", nullable = true)
-    public Date getTimastamp() {
-        return timastamp;
+    @Column(name = "join_date", nullable = true)
+    public Timestamp getJoinDate() {
+        return joinDate;
     }
 
-    public void setTimastamp(Date timastamp) {
-        this.timastamp = timastamp;
+    public void setJoinDate(Timestamp joinDate) {
+        this.joinDate = joinDate;
     }
 
     @Basic
@@ -218,7 +222,7 @@ public class Person {
         if (!Objects.equals(phone1, person.phone1)) return false;
         if (!Objects.equals(phone2, person.phone2)) return false;
         if (!Objects.equals(phone3, person.phone3)) return false;
-        if (!Objects.equals(timastamp, person.timastamp)) return false;
+        if (!Objects.equals(joinDate, person.joinDate)) return false;
         if (!Objects.equals(city, person.city)) return false;
         return Objects.equals(area, person.area);
     }
@@ -238,13 +242,22 @@ public class Person {
         result = 31 * result + (phone1 != null ? phone1.hashCode() : 0);
         result = 31 * result + (phone2 != null ? phone2.hashCode() : 0);
         result = 31 * result + (phone3 != null ? phone3.hashCode() : 0);
-        result = 31 * result + (timastamp != null ? timastamp.hashCode() : 0);
+        result = 31 * result + (joinDate != null ? joinDate.hashCode() : 0);
         result = 31 * result + (city != null ? city.hashCode() : 0);
         result = 31 * result + (area != null ? area.hashCode() : 0);
         return result;
     }
 
-    @OneToMany(mappedBy = "personBySender")
+    @OneToOne(mappedBy = "personBySender", fetch = FetchType.LAZY)
+    public Chat getChatById() {
+        return chatById;
+    }
+
+    public void setChatById(Chat chatById) {
+        this.chatById = chatById;
+    }
+
+    @OneToMany(mappedBy = "personByReceiver", fetch = FetchType.LAZY)
     public Collection<Chat> getChatsById() {
         return chatsById;
     }
@@ -253,16 +266,16 @@ public class Person {
         this.chatsById = chatsById;
     }
 
-    @OneToMany(mappedBy = "personByReceiver")
-    public Collection<Chat> getChatsById_0() {
-        return chatsById_0;
+    @OneToOne(mappedBy = "personByComplainant", fetch = FetchType.LAZY)
+    public Complain getComplainById() {
+        return complainById;
     }
 
-    public void setChatsById_0(Collection<Chat> chatsById_0) {
-        this.chatsById_0 = chatsById_0;
+    public void setComplainById(Complain complainById) {
+        this.complainById = complainById;
     }
 
-    @OneToMany(mappedBy = "personByComplainant")
+    @OneToMany(mappedBy = "personBySuspect", fetch = FetchType.LAZY)
     public Collection<Complain> getComplainsById() {
         return complainsById;
     }
@@ -271,34 +284,34 @@ public class Person {
         this.complainsById = complainsById;
     }
 
-    @OneToMany(mappedBy = "personByComplanie")
-    public Collection<Complain> getComplainsById_0() {
-        return complainsById_0;
+    @OneToOne(mappedBy = "personByPersonId", fetch = FetchType.LAZY)
+    public ConveyanceProvider getConveyanceProviderById() {
+        return conveyanceProviderById;
     }
 
-    public void setComplainsById_0(Collection<Complain> complainsById_0) {
-        this.complainsById_0 = complainsById_0;
+    public void setConveyanceProviderById(ConveyanceProvider conveyanceProviderById) {
+        this.conveyanceProviderById = conveyanceProviderById;
     }
 
-    @OneToMany(mappedBy = "personByPersonId")
-    public Collection<ConveyanceProvider> getConveyanceProvidersById() {
-        return conveyanceProvidersById;
+    @OneToOne(mappedBy = "personByPersonId", fetch = FetchType.LAZY)
+    public Donor getDonorById() {
+        return donorById;
     }
 
-    public void setConveyanceProvidersById(Collection<ConveyanceProvider> conveyanceProvidersById) {
-        this.conveyanceProvidersById = conveyanceProvidersById;
+    public void setDonorById(Donor donorById) {
+        this.donorById = donorById;
     }
 
-    @OneToMany(mappedBy = "personByPersonId")
-    public Collection<Donor> getDonorsById() {
-        return donorsById;
+    @OneToOne(mappedBy = "personByPersonId", fetch = FetchType.LAZY)
+    public Friend getFriendById() {
+        return friendById;
     }
 
-    public void setDonorsById(Collection<Donor> donorsById) {
-        this.donorsById = donorsById;
+    public void setFriendById(Friend friendById) {
+        this.friendById = friendById;
     }
 
-    @OneToMany(mappedBy = "personByPersonId")
+    @OneToMany(mappedBy = "personByFriendId", fetch = FetchType.LAZY)
     public Collection<Friend> getFriendsById() {
         return friendsById;
     }
@@ -307,66 +320,57 @@ public class Person {
         this.friendsById = friendsById;
     }
 
-    @OneToMany(mappedBy = "personByFriendId")
-    public Collection<Friend> getFriendsById_0() {
-        return friendsById_0;
+    @OneToOne(mappedBy = "personByPersonId", fetch = FetchType.LAZY)
+    public History getHistoryById() {
+        return historyById;
     }
 
-    public void setFriendsById_0(Collection<Friend> friendsById_0) {
-        this.friendsById_0 = friendsById_0;
+    public void setHistoryById(History historyById) {
+        this.historyById = historyById;
     }
 
-    @OneToMany(mappedBy = "personByPersonId")
-    public Collection<History> getHistoriesById() {
-        return historiesById;
+    @OneToOne(mappedBy = "personByPersonId", fetch = FetchType.LAZY)
+    public ReportProblem getReportProblemById() {
+        return reportProblemById;
     }
 
-    public void setHistoriesById(Collection<History> historiesById) {
-        this.historiesById = historiesById;
+    public void setReportProblemById(ReportProblem reportProblemById) {
+        this.reportProblemById = reportProblemById;
     }
 
-    @OneToMany(mappedBy = "personByPersonId")
-    public Collection<ReportProblem> getReportProblemsById() {
-        return reportProblemsById;
+    @OneToOne(mappedBy = "personByHeadId", fetch = FetchType.LAZY)
+    public Society getSocietyById() {
+        return societyById;
     }
 
-    public void setReportProblemsById(Collection<ReportProblem> reportProblemsById) {
-        this.reportProblemsById = reportProblemsById;
+    public void setSocietyById(Society societyById) {
+        this.societyById = societyById;
     }
 
-    @OneToMany(mappedBy = "personByHeadId")
-    public Collection<Society> getSocietiesById() {
-        return societiesById;
+    @OneToOne(mappedBy = "personByPersonId", fetch = FetchType.LAZY)
+    public SocietyAdmin getSocietyAdminById() {
+        return societyAdminById;
     }
 
-    public void setSocietiesById(Collection<Society> societiesById) {
-        this.societiesById = societiesById;
+    public void setSocietyAdminById(SocietyAdmin societyAdminById) {
+        this.societyAdminById = societyAdminById;
     }
 
-    @OneToMany(mappedBy = "personByPersonId")
-    public Collection<SocietyAdmin> getSocietyAdminsById() {
-        return societyAdminsById;
+    @OneToOne(mappedBy = "personByHeadId", fetch = FetchType.LAZY)
+    public SocietyRequest getSocietyRequestById() {
+        return societyRequestById;
     }
 
-    public void setSocietyAdminsById(Collection<SocietyAdmin> societyAdminsById) {
-        this.societyAdminsById = societyAdminsById;
+    public void setSocietyRequestById(SocietyRequest societyRequestById) {
+        this.societyRequestById = societyRequestById;
     }
 
-    @OneToMany(mappedBy = "personByHeadId")
-    public Collection<SocietyRequest> getSocietyRequestsById() {
-        return societyRequestsById;
+    @OneToOne(mappedBy = "personByPersonId", fetch = FetchType.LAZY)
+    public SuperAdmin getSuperAdminById() {
+        return superAdminById;
     }
 
-    public void setSocietyRequestsById(Collection<SocietyRequest> societyRequestsById) {
-        this.societyRequestsById = societyRequestsById;
-    }
-
-    @OneToMany(mappedBy = "personByPersonId")
-    public Collection<SuperAdmin> getSuperAdminsById() {
-        return superAdminsById;
-    }
-
-    public void setSuperAdminsById(Collection<SuperAdmin> superAdminsById) {
-        this.superAdminsById = superAdminsById;
+    public void setSuperAdminById(SuperAdmin superAdminById) {
+        this.superAdminById = superAdminById;
     }
 }

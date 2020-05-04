@@ -4,18 +4,18 @@ import javax.persistence.*;
 
 @Entity
 public class Friend {
-    private int id;
+    private int personId;
     private Person personByPersonId;
     private Person personByFriendId;
 
     @Id
-    @Column(name = "id", nullable = false)
-    public int getId() {
-        return id;
+    @Column(name = "person_id", nullable = false)
+    public int getPersonId() {
+        return personId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPersonId(int personId) {
+        this.personId = personId;
     }
 
     @Override
@@ -25,17 +25,15 @@ public class Friend {
 
         Friend friend = (Friend) o;
 
-        if (id != friend.id) return false;
-
-        return true;
+        return personId == friend.personId;
     }
 
     @Override
     public int hashCode() {
-        return id;
+        return personId;
     }
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "person_id", referencedColumnName = "id", nullable = false)
     public Person getPersonByPersonId() {
         return personByPersonId;

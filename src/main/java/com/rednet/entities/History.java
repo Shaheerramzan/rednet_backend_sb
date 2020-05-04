@@ -6,21 +6,11 @@ import java.util.Objects;
 
 @Entity
 public class History {
-    private int id;
     private Timestamp time;
     private Byte complitionStatus;
     private Byte historyType;
+    private int personId;
     private Person personByPersonId;
-
-    @Id
-    @Column(name = "id", nullable = false)
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     @Basic
     @Column(name = "time", nullable = true)
@@ -52,6 +42,16 @@ public class History {
         this.historyType = historyType;
     }
 
+    @Id
+    @Column(name = "person_id", nullable = false)
+    public int getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(int personId) {
+        this.personId = personId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -59,23 +59,25 @@ public class History {
 
         History history = (History) o;
 
-        if (id != history.id) return false;
+        if (personId != history.personId) return false;
         if (!Objects.equals(time, history.time)) return false;
         if (!Objects.equals(complitionStatus, history.complitionStatus))
             return false;
-        return Objects.equals(historyType, history.historyType);
+        if (!Objects.equals(historyType, history.historyType)) return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (time != null ? time.hashCode() : 0);
+        int result = time != null ? time.hashCode() : 0;
         result = 31 * result + (complitionStatus != null ? complitionStatus.hashCode() : 0);
         result = 31 * result + (historyType != null ? historyType.hashCode() : 0);
+        result = 31 * result + personId;
         return result;
     }
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "person_id", referencedColumnName = "id", nullable = false)
     public Person getPersonByPersonId() {
         return personByPersonId;

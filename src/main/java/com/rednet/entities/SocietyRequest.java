@@ -6,20 +6,10 @@ import java.util.Objects;
 @Entity
 @Table(name = "society_request", schema = "rednet")
 public class SocietyRequest {
-    private int id;
     private String name;
     private String description;
+    private int headId;
     private Person personByHeadId;
-
-    @Id
-    @Column(name = "id", nullable = false)
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     @Basic
     @Column(name = "name", nullable = true, length = 60)
@@ -41,6 +31,16 @@ public class SocietyRequest {
         this.description = description;
     }
 
+    @Id
+    @Column(name = "head_id", nullable = false)
+    public int getHeadId() {
+        return headId;
+    }
+
+    public void setHeadId(int headId) {
+        this.headId = headId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -48,20 +48,20 @@ public class SocietyRequest {
 
         SocietyRequest that = (SocietyRequest) o;
 
-        if (id != that.id) return false;
+        if (headId != that.headId) return false;
         if (!Objects.equals(name, that.name)) return false;
         return Objects.equals(description, that.description);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        int result = name != null ? name.hashCode() : 0;
         result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + headId;
         return result;
     }
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "head_id", referencedColumnName = "id", nullable = false)
     public Person getPersonByHeadId() {
         return personByHeadId;

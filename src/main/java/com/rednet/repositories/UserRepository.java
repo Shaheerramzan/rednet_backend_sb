@@ -4,5 +4,5 @@ import com.rednet.entities.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<Person, Integer> {
-    public Person findPersonByUsernameAndPassword(String username, String password);
+    Person findPersonByUsernameAndPassword(String username, String password);
 }

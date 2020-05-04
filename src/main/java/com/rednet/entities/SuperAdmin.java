@@ -5,17 +5,17 @@ import javax.persistence.*;
 @Entity
 @Table(name = "super_admin", schema = "rednet")
 public class SuperAdmin {
-    private int id;
+    private int personId;
     private Person personByPersonId;
 
     @Id
-    @Column(name = "id", nullable = false)
-    public int getId() {
-        return id;
+    @Column(name = "person_id", nullable = false)
+    public int getPersonId() {
+        return personId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPersonId(int personId) {
+        this.personId = personId;
     }
 
     @Override
@@ -25,15 +25,15 @@ public class SuperAdmin {
 
         SuperAdmin that = (SuperAdmin) o;
 
-        return id == that.id;
+        return personId == that.personId;
     }
 
     @Override
     public int hashCode() {
-        return id;
+        return personId;
     }
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "person_id", referencedColumnName = "id", nullable = false)
     public Person getPersonByPersonId() {
         return personByPersonId;

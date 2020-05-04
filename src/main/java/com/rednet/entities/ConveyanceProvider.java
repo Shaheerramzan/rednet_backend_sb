@@ -6,19 +6,9 @@ import java.util.Objects;
 @Entity
 @Table(name = "conveyance_provider", schema = "rednet")
 public class ConveyanceProvider {
-    private int id;
     private Byte isMute;
+    private int personId;
     private Person personByPersonId;
-
-    @Id
-    @Column(name = "id", nullable = false)
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     @Basic
     @Column(name = "is_mute", nullable = true)
@@ -30,6 +20,16 @@ public class ConveyanceProvider {
         this.isMute = isMute;
     }
 
+    @Id
+    @Column(name = "person_id", nullable = false)
+    public int getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(int personId) {
+        this.personId = personId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -37,18 +37,18 @@ public class ConveyanceProvider {
 
         ConveyanceProvider that = (ConveyanceProvider) o;
 
-        if (id != that.id) return false;
+        if (personId != that.personId) return false;
         return Objects.equals(isMute, that.isMute);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (isMute != null ? isMute.hashCode() : 0);
+        int result = isMute != null ? isMute.hashCode() : 0;
+        result = 31 * result + personId;
         return result;
     }
 
-    @ManyToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "person_id", referencedColumnName = "id", nullable = false)
     public Person getPersonByPersonId() {
         return personByPersonId;

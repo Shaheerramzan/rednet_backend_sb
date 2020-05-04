@@ -6,19 +6,9 @@ import java.util.Objects;
 @Entity
 @Table(name = "report_problem", schema = "rednet")
 public class ReportProblem {
-    private int id;
     private String problem;
+    private int personId;
     private Person personByPersonId;
-
-    @Id
-    @Column(name = "id", nullable = false)
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     @Basic
     @Column(name = "problem", nullable = true, length = 500)
@@ -30,6 +20,16 @@ public class ReportProblem {
         this.problem = problem;
     }
 
+    @Id
+    @Column(name = "person_id", nullable = false)
+    public int getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(int personId) {
+        this.personId = personId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -37,18 +37,18 @@ public class ReportProblem {
 
         ReportProblem that = (ReportProblem) o;
 
-        if (id != that.id) return false;
+        if (personId != that.personId) return false;
         return Objects.equals(problem, that.problem);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (problem != null ? problem.hashCode() : 0);
+        int result = problem != null ? problem.hashCode() : 0;
+        result = 31 * result + personId;
         return result;
     }
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "person_id", referencedColumnName = "id", nullable = false)
     public Person getPersonByPersonId() {
         return personByPersonId;

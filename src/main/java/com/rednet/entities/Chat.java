@@ -5,20 +5,10 @@ import java.util.Objects;
 
 @Entity
 public class Chat {
-    private int id;
     private String message;
+    private int sender;
     private Person personBySender;
     private Person personByReceiver;
-
-    @Id
-    @Column(name = "id", nullable = false)
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     @Basic
     @Column(name = "message", nullable = true, length = 500)
@@ -30,6 +20,16 @@ public class Chat {
         this.message = message;
     }
 
+    @Id
+    @Column(name = "sender", nullable = false)
+    public int getSender() {
+        return sender;
+    }
+
+    public void setSender(int sender) {
+        this.sender = sender;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -37,18 +37,18 @@ public class Chat {
 
         Chat chat = (Chat) o;
 
-        if (id != chat.id) return false;
+        if (sender != chat.sender) return false;
         return Objects.equals(message, chat.message);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (message != null ? message.hashCode() : 0);
+        int result = message != null ? message.hashCode() : 0;
+        result = 31 * result + sender;
         return result;
     }
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "sender", referencedColumnName = "id", nullable = false)
     public Person getPersonBySender() {
         return personBySender;

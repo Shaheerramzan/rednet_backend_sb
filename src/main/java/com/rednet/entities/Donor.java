@@ -6,22 +6,12 @@ import java.util.Objects;
 
 @Entity
 public class Donor {
-    private int id;
     private Date lastDonatedDate;
     private Byte isBusy;
     private Byte systemMute;
-    private Society societyBySocietyId;
+    private int societyId;
+    private int personId;
     private Person personByPersonId;
-
-    @Id
-    @Column(name = "id", nullable = false)
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     @Basic
     @Column(name = "last_donated_date", nullable = true)
@@ -53,6 +43,26 @@ public class Donor {
         this.systemMute = systemMute;
     }
 
+    @Basic
+    @Column(name = "society_id", nullable = false)
+    public int getSocietyId() {
+        return societyId;
+    }
+
+    public void setSocietyId(int societyId) {
+        this.societyId = societyId;
+    }
+
+    @Id
+    @Column(name = "person_id", nullable = false)
+    public int getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(int personId) {
+        this.personId = personId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -60,7 +70,8 @@ public class Donor {
 
         Donor donor = (Donor) o;
 
-        if (id != donor.id) return false;
+        if (societyId != donor.societyId) return false;
+        if (personId != donor.personId) return false;
         if (!Objects.equals(lastDonatedDate, donor.lastDonatedDate))
             return false;
         if (!Objects.equals(isBusy, donor.isBusy)) return false;
@@ -69,24 +80,15 @@ public class Donor {
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (lastDonatedDate != null ? lastDonatedDate.hashCode() : 0);
+        int result = lastDonatedDate != null ? lastDonatedDate.hashCode() : 0;
         result = 31 * result + (isBusy != null ? isBusy.hashCode() : 0);
         result = 31 * result + (systemMute != null ? systemMute.hashCode() : 0);
+        result = 31 * result + societyId;
+        result = 31 * result + personId;
         return result;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "society_id", referencedColumnName = "id", nullable = false)
-    public Society getSocietyBySocietyId() {
-        return societyBySocietyId;
-    }
-
-    public void setSocietyBySocietyId(Society societyBySocietyId) {
-        this.societyBySocietyId = societyBySocietyId;
-    }
-
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "person_id", referencedColumnName = "id", nullable = false)
     public Person getPersonByPersonId() {
         return personByPersonId;

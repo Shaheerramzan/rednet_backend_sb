@@ -5,18 +5,28 @@ import javax.persistence.*;
 @Entity
 @Table(name = "society_admin", schema = "rednet")
 public class SocietyAdmin {
-    private int id;
+    private int personId;
+    private int societyId;
     private Person personByPersonId;
-    private Society societyBySocietyId;
 
     @Id
-    @Column(name = "id", nullable = false)
-    public int getId() {
-        return id;
+    @Column(name = "person_id", nullable = false)
+    public int getPersonId() {
+        return personId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPersonId(int personId) {
+        this.personId = personId;
+    }
+
+    @Basic
+    @Column(name = "society_id", nullable = false)
+    public int getSocietyId() {
+        return societyId;
+    }
+
+    public void setSocietyId(int societyId) {
+        this.societyId = societyId;
     }
 
     @Override
@@ -26,17 +36,18 @@ public class SocietyAdmin {
 
         SocietyAdmin that = (SocietyAdmin) o;
 
-        if (id != that.id) return false;
-
-        return true;
+        if (personId != that.personId) return false;
+        return societyId == that.societyId;
     }
 
     @Override
     public int hashCode() {
-        return id;
+        int result = personId;
+        result = 31 * result + societyId;
+        return result;
     }
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "person_id", referencedColumnName = "id", nullable = false)
     public Person getPersonByPersonId() {
         return personByPersonId;
@@ -44,15 +55,5 @@ public class SocietyAdmin {
 
     public void setPersonByPersonId(Person personByPersonId) {
         this.personByPersonId = personByPersonId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "society_id", referencedColumnName = "id", nullable = false)
-    public Society getSocietyBySocietyId() {
-        return societyBySocietyId;
-    }
-
-    public void setSocietyBySocietyId(Society societyBySocietyId) {
-        this.societyBySocietyId = societyBySocietyId;
     }
 }

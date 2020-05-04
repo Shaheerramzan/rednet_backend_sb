@@ -5,21 +5,21 @@ import java.util.Objects;
 
 @Entity
 public class Complain {
-    private int id;
+    private int complainant;
     private String message;
     private Byte isResolved;
     private String reply;
     private Person personByComplainant;
-    private Person personByComplanie;
+    private Person personBySuspect;
 
     @Id
-    @Column(name = "id", nullable = false)
-    public int getId() {
-        return id;
+    @Column(name = "complainant", nullable = false)
+    public int getComplainant() {
+        return complainant;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setComplainant(int complainant) {
+        this.complainant = complainant;
     }
 
     @Basic
@@ -59,7 +59,7 @@ public class Complain {
 
         Complain complain = (Complain) o;
 
-        if (id != complain.id) return false;
+        if (complainant != complain.complainant) return false;
         if (!Objects.equals(message, complain.message)) return false;
         if (!Objects.equals(isResolved, complain.isResolved)) return false;
         return Objects.equals(reply, complain.reply);
@@ -67,14 +67,14 @@ public class Complain {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = complainant;
         result = 31 * result + (message != null ? message.hashCode() : 0);
         result = 31 * result + (isResolved != null ? isResolved.hashCode() : 0);
         result = 31 * result + (reply != null ? reply.hashCode() : 0);
         return result;
     }
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "complainant", referencedColumnName = "id", nullable = false)
     public Person getPersonByComplainant() {
         return personByComplainant;
@@ -85,12 +85,12 @@ public class Complain {
     }
 
     @ManyToOne
-    @JoinColumn(name = "complanie", referencedColumnName = "id", nullable = false)
-    public Person getPersonByComplanie() {
-        return personByComplanie;
+    @JoinColumn(name = "suspect", referencedColumnName = "id", nullable = false)
+    public Person getPersonBySuspect() {
+        return personBySuspect;
     }
 
-    public void setPersonByComplanie(Person personByComplanie) {
-        this.personByComplanie = personByComplanie;
+    public void setPersonBySuspect(Person personBySuspect) {
+        this.personBySuspect = personBySuspect;
     }
 }
