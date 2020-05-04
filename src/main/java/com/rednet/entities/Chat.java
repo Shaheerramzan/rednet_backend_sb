@@ -1,14 +1,27 @@
 package com.rednet.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 public class Chat {
+    private int chatId;
     private String message;
     private int sender;
     private Person personBySender;
     private Person personByReceiver;
+
+    @Id
+    @Column(name = "chat_id", nullable = false)
+    public int getChatId() {
+        return chatId;
+    }
+
+    public void setChatId(int chatId) {
+        this.chatId = chatId;
+    }
 
     @Basic
     @Column(name = "message", nullable = true, length = 500)
@@ -34,22 +47,19 @@ public class Chat {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Chat chat = (Chat) o;
-
-        if (sender != chat.sender) return false;
-        return Objects.equals(message, chat.message);
+        return chatId == chat.chatId &&
+                Objects.equals(message, chat.message);
     }
 
     @Override
     public int hashCode() {
-        int result = message != null ? message.hashCode() : 0;
-        result = 31 * result + sender;
-        return result;
+        return Objects.hash(chatId, message);
     }
 
-    @OneToOne
-    @JoinColumn(name = "sender", referencedColumnName = "id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "sender", referencedColumnName = "person_id", nullable = false)
+    @JsonIgnore
     public Person getPersonBySender() {
         return personBySender;
     }
@@ -59,7 +69,8 @@ public class Chat {
     }
 
     @ManyToOne
-    @JoinColumn(name = "receiver", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "receiver", referencedColumnName = "person_id", nullable = false)
+    @JsonIgnore
     public Person getPersonByReceiver() {
         return personByReceiver;
     }

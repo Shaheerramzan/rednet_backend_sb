@@ -1,14 +1,27 @@
 package com.rednet.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 @Table(name = "report_problem", schema = "rednet")
 public class ReportProblem {
+    private int reportProblemId;
     private String problem;
     private int personId;
     private Person personByPersonId;
+
+    @Id
+    @Column(name = "report_problem_id", nullable = false)
+    public int getReportProblemId() {
+        return reportProblemId;
+    }
+
+    public void setReportProblemId(int reportProblemId) {
+        this.reportProblemId = reportProblemId;
+    }
 
     @Basic
     @Column(name = "problem", nullable = true, length = 500)
@@ -34,22 +47,19 @@ public class ReportProblem {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         ReportProblem that = (ReportProblem) o;
-
-        if (personId != that.personId) return false;
-        return Objects.equals(problem, that.problem);
+        return reportProblemId == that.reportProblemId &&
+                Objects.equals(problem, that.problem);
     }
 
     @Override
     public int hashCode() {
-        int result = problem != null ? problem.hashCode() : 0;
-        result = 31 * result + personId;
-        return result;
+        return Objects.hash(reportProblemId, problem);
     }
 
-    @OneToOne
-    @JoinColumn(name = "person_id", referencedColumnName = "id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "person_id", referencedColumnName = "person_id", nullable = false)
+    @JsonIgnore
     public Person getPersonByPersonId() {
         return personByPersonId;
     }

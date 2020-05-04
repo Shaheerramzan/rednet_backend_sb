@@ -1,59 +1,58 @@
 package com.rednet.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "society_admin", schema = "rednet")
 public class SocietyAdmin {
-    private int personId;
-    private int societyId;
+    private int societyAdminId;
     private Person personByPersonId;
 
     @Id
-    @Column(name = "person_id", nullable = false)
-    public int getPersonId() {
-        return personId;
+    @Column(name = "society_admin_id", nullable = false)
+    public int getSocietyAdminId() {
+        return societyAdminId;
     }
 
-    public void setPersonId(int personId) {
-        this.personId = personId;
-    }
-
-    @Basic
-    @Column(name = "society_id", nullable = false)
-    public int getSocietyId() {
-        return societyId;
-    }
-
-    public void setSocietyId(int societyId) {
-        this.societyId = societyId;
+    public void setSocietyAdminId(int societyAdminId) {
+        this.societyAdminId = societyAdminId;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         SocietyAdmin that = (SocietyAdmin) o;
-
-        if (personId != that.personId) return false;
-        return societyId == that.societyId;
+        return societyAdminId == that.societyAdminId;
     }
 
     @Override
     public int hashCode() {
-        int result = personId;
-        result = 31 * result + societyId;
-        return result;
+        return Objects.hash(societyAdminId);
     }
 
-    @OneToOne
-    @JoinColumn(name = "person_id", referencedColumnName = "id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "person_id", referencedColumnName = "person_id", nullable = false)
+    @JsonIgnore
     public Person getPersonByPersonId() {
         return personByPersonId;
     }
 
     public void setPersonByPersonId(Person personByPersonId) {
         this.personByPersonId = personByPersonId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "society_id", referencedColumnName = "society_id", nullable = false)
+    @JsonIgnore
+    public Society getSocietyBySocietyId() {
+        return societyBySocietyId;
+    }
+
+    public void setSocietyBySocietyId(Society societyBySocietyId) {
+        this.societyBySocietyId = societyBySocietyId;
     }
 }

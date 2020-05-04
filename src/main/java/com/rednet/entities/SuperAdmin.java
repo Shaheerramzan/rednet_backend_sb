@@ -1,40 +1,42 @@
 package com.rednet.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "super_admin", schema = "rednet")
 public class SuperAdmin {
-    private int personId;
+    private int superAdminId;
     private Person personByPersonId;
 
     @Id
-    @Column(name = "person_id", nullable = false)
-    public int getPersonId() {
-        return personId;
+    @Column(name = "super_admin_id", nullable = false)
+    public int getSuperAdminId() {
+        return superAdminId;
     }
 
-    public void setPersonId(int personId) {
-        this.personId = personId;
+    public void setSuperAdminId(int superAdminId) {
+        this.superAdminId = superAdminId;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         SuperAdmin that = (SuperAdmin) o;
-
-        return personId == that.personId;
+        return superAdminId == that.superAdminId;
     }
 
     @Override
     public int hashCode() {
-        return personId;
+        return Objects.hash(superAdminId);
     }
 
-    @OneToOne
-    @JoinColumn(name = "person_id", referencedColumnName = "id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "person_id", referencedColumnName = "person_id", nullable = false)
+    @JsonIgnore
     public Person getPersonByPersonId() {
         return personByPersonId;
     }

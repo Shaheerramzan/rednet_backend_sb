@@ -1,11 +1,13 @@
 package com.rednet.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 public class Complain {
-    private int complainant;
+    private int complainId;
     private String message;
     private Byte isResolved;
     private String reply;
@@ -13,13 +15,13 @@ public class Complain {
     private Person personBySuspect;
 
     @Id
-    @Column(name = "complainant", nullable = false)
-    public int getComplainant() {
-        return complainant;
+    @Column(name = "complain_id", nullable = false)
+    public int getComplainId() {
+        return complainId;
     }
 
-    public void setComplainant(int complainant) {
-        this.complainant = complainant;
+    public void setComplainId(int complainId) {
+        this.complainId = complainId;
     }
 
     @Basic
@@ -56,26 +58,21 @@ public class Complain {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Complain complain = (Complain) o;
-
-        if (complainant != complain.complainant) return false;
-        if (!Objects.equals(message, complain.message)) return false;
-        if (!Objects.equals(isResolved, complain.isResolved)) return false;
-        return Objects.equals(reply, complain.reply);
+        return complainId == complain.complainId &&
+                Objects.equals(message, complain.message) &&
+                Objects.equals(isResolved, complain.isResolved) &&
+                Objects.equals(reply, complain.reply);
     }
 
     @Override
     public int hashCode() {
-        int result = complainant;
-        result = 31 * result + (message != null ? message.hashCode() : 0);
-        result = 31 * result + (isResolved != null ? isResolved.hashCode() : 0);
-        result = 31 * result + (reply != null ? reply.hashCode() : 0);
-        return result;
+        return Objects.hash(complainId, message, isResolved, reply);
     }
 
-    @OneToOne
-    @JoinColumn(name = "complainant", referencedColumnName = "id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "complainant", referencedColumnName = "person_id", nullable = false)
+    @JsonIgnore
     public Person getPersonByComplainant() {
         return personByComplainant;
     }
@@ -85,9 +82,10 @@ public class Complain {
     }
 
     @ManyToOne
-    @JoinColumn(name = "suspect", referencedColumnName = "id", nullable = false)
-    public Person getPersonBySuspect() {
-        return personBySuspect;
+    @JoinColumn(name = "complanie", referencedColumnName = "person_id", nullable = false)
+    @JsonIgnore
+    public Person getPersonByComplanie() {
+        return personByComplanie;
     }
 
     public void setPersonBySuspect(Person personBySuspect) {

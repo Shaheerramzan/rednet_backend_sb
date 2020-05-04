@@ -1,16 +1,29 @@
 package com.rednet.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
 public class History {
+    private int historyId;
     private Timestamp time;
-    private Byte complitionStatus;
+    private Byte completionStatus;
     private Byte historyType;
     private int personId;
     private Person personByPersonId;
+
+    @Id
+    @Column(name = "history_id", nullable = false)
+    public int getHistoryId() {
+        return historyId;
+    }
+
+    public void setHistoryId(int historyId) {
+        this.historyId = historyId;
+    }
 
     @Basic
     @Column(name = "time", nullable = true)
@@ -23,13 +36,13 @@ public class History {
     }
 
     @Basic
-    @Column(name = "complition_status", nullable = true)
-    public Byte getComplitionStatus() {
-        return complitionStatus;
+    @Column(name = "completion_status", nullable = true)
+    public Byte getCompletionStatus() {
+        return completionStatus;
     }
 
-    public void setComplitionStatus(Byte complitionStatus) {
-        this.complitionStatus = complitionStatus;
+    public void setCompletionStatus(Byte completionStatus) {
+        this.completionStatus = completionStatus;
     }
 
     @Basic
@@ -56,29 +69,21 @@ public class History {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         History history = (History) o;
-
-        if (personId != history.personId) return false;
-        if (!Objects.equals(time, history.time)) return false;
-        if (!Objects.equals(complitionStatus, history.complitionStatus))
-            return false;
-        if (!Objects.equals(historyType, history.historyType)) return false;
-
-        return true;
+        return historyId == history.historyId &&
+                Objects.equals(time, history.time) &&
+                Objects.equals(completionStatus, history.completionStatus) &&
+                Objects.equals(historyType, history.historyType);
     }
 
     @Override
     public int hashCode() {
-        int result = time != null ? time.hashCode() : 0;
-        result = 31 * result + (complitionStatus != null ? complitionStatus.hashCode() : 0);
-        result = 31 * result + (historyType != null ? historyType.hashCode() : 0);
-        result = 31 * result + personId;
-        return result;
+        return Objects.hash(historyId, time, completionStatus, historyType);
     }
 
-    @OneToOne
-    @JoinColumn(name = "person_id", referencedColumnName = "id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "person_id", referencedColumnName = "person_id", nullable = false)
+    @JsonIgnore
     public Person getPersonByPersonId() {
         return personByPersonId;
     }
